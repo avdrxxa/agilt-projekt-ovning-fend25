@@ -39,14 +39,6 @@
       "cards": []
     },
     {
-      "name": "Todo",
-      "cards": []
-    },
-    {
-      "name": "In Progress",
-      "cards": []
-    },
-    {
       "name": "Buggar",
       "cards": [
         {
@@ -74,6 +66,10 @@
           "desc": "Knappen för att gå tillbaka till startsidan från playerinfo fungerar inte alltid som förväntat."
         }
       ]
+    },
+    {
+      "name": "In Progress",
+      "cards": []
     },
     {
       "name": "Done",
