@@ -137,7 +137,7 @@ function renderPlayerInfo() {
     profile.innerHTML = `
 <div class="profile">
 <h2>${player?.username}</h2>
-<p><b>Name:</b> ${playe<r?.firstname} ${player?.lastname}</p>
+<p><b>Name:</b> ${player?.firstname} ${player?.lastname}</p>
 <p><b>Age:</b> ${player?.age}</p>
 <p><b>Country:</b> ${player?.country}</p>
 <p><b>Ranking:</b> ${player?.ranking}</p>
