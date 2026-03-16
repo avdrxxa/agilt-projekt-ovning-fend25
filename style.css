@@ -93,10 +93,26 @@ ul#teamAList, ul#teamBList{
 }
 
 .profile {
-    background: white;
+    align-self: center;
+    justify-self: center;
+    margin-top: 70px;
+    background: rgb(36, 29, 100);
+    color: aliceblue;
     padding: 30px;
     border-radius: 10px;
-    width: 300px;
+    width: 250px;
+    height: 270px;
+    h2{
+        justify-self: center;
+    }
+    button{
+        background-color: aliceblue;
+        justify-self: center;
+        align-self: center;
+        color: rgb(36, 29, 100);
+        padding: 10px 30px;
+        border-radius: 5px;
+    }
 }
 
 form#playerForm{
@@ -118,4 +134,55 @@ form#playerForm{
     justify-self: center;
     margin: 40px 0;
     color: rgb(36, 29, 100);
+}
+
+@media screen and (min-width:1250px) and (max-width:2200px){
+    .team {
+        padding: 60px;
+        border-radius: 10px;
+        width: 500px;
+        height: 400px;
+        h2{
+            font-size: 35px;
+            margin-bottom: 50px;
+        }
+        ul li span{
+            color: white;
+            justify-self: center;
+            font-size: 20px;
+        }
+        ul li{
+            margin: 20px 0;
+        }
+    }
+    .add{
+        padding: 10px 80px;
+    }
+    .rename{
+        gap: 20px;
+    }
+    .input{
+        padding: 10px 80px;
+    }
+    button{
+        padding: 10px 35px;
+    }
+    .rename button:first-of-type{
+        margin-right: 360px;
+    }
+    .profile {
+        margin-top: 100px;
+        font-size: 20px;
+        padding: 60px;
+        width: 500px;
+        height: 400px;
+        h2{
+            font-size: 40px;
+        }
+        button{
+            margin-top: 50px;
+            font-size: 20px;
+            padding: 10px 50px;
+        }
+    }
 }
