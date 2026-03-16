@@ -9,16 +9,16 @@
 <body>
     <nav>
         <a href="index.html">Home</a>
-        <a href="addplayer.html">Add Player</a>
+        <a class="add" href="addplayer.html">Add Player</a>
     </nav>
     <h1>Add Player</h1>
     <form id="playerForm">
-        <input id="username" placeholder="Username" required>
-        <input id="firstname" placeholder="First name" required>
-        <input id="lastname" placeholder="Last name" required>
-        <input id="age" type="number" placeholder="Age" required>
-        <input id="country" placeholder="Country" required>
-        <select id="ranking">
+        <input class="input" id="username" placeholder="Username" required>
+        <input class="input" id="firstname" placeholder="First name" required>
+        <input class="input" id="lastname" placeholder="Last name" required>
+        <input class="input" id="age" type="number" placeholder="Age" required>
+        <input class="input" id="country" placeholder="Country" required>
+        <select class="input" id="ranking">
             <option>Iron</option>
             <option>Bronze</option>
             <option>Silver</option>
@@ -26,7 +26,7 @@
             <option>Diamond</option>
         </select>
         <br><br>
-        <select id="teamSelect"></select>
+        <select class="input" id="teamSelect"></select>
         <br><br>
         <button>Add Player</button>
     </form>
