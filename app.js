@@ -70,17 +70,12 @@ function goToPlayer(username) {
 
 function removePlayer(team, username) {
     if (team === "A") {
-        if(teamA.includes(username)){
-            username.remove()
-            console.log(username)
-        }
-    }
-    if (team === "B") {
-       // teamB.
+        teamA = teamA.filter(p => p.username !== username)
+    } else {
+        teamB = teamB.filter(p => p.username !== username)
     }
     save()
     renderHome()
-
 }
 
 function usernameExists(username) {
