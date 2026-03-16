@@ -142,12 +142,52 @@ function renderPlayerInfo() {
 <p><b>Country:</b> ${player?.country}</p>
 <p><b>Ranking:</b> ${player?.ranking}</p>
 <br>
-<button onclick="window.location='index.html'">
-Back
-</button>
-
+<button onclick="window.location='index.html'">Back</button>
+<button id="editBtn">Edit</button>
 </div>
 
 `
 
+;
+
+const editBtn = document.getElementById("editBtn");
+    editBtn.addEventListener("click", () => enableEdit(profile, player));
+}
+
+function enableEdit(profileDiv, player) {
+    profileDiv.innerHTML = `
+        <div class="profile">
+        <h2>${player?.username}</h2>
+        <p><b>First name:</b> <input type="text" value="${player?.firstname}" class="edit-fname"></p>
+        <p><b>Last name:</b> <input type="text" value="${player?.lastname}" class="edit-lname"></p>
+        <p><b>Age:</b> <input type="number" value="${player?.age}" class="edit-age"></p>
+        <p><b>Country:</b> <input type="text" value="${player?.country}" class="edit-country"></p>
+        <p><b>Ranking:</b> 
+        <select class="edit-ranking" id="ranking" value="${player?.ranking}">
+            <option>Iron</option>
+            <option>Bronze</option>
+            <option>Silver</option>
+            <option>Gold</option>
+            <option>Diamond</option>
+        </select>
+        </p>
+        <button class="saveBtn">Save</button>
+        <button class="cancelBtn">Cancel</button>
+        </div>
+    `;
+
+    profileDiv.querySelector(".saveBtn").addEventListener("click", () => {
+        player.firstname = profileDiv.querySelector(".edit-fname")?.value;
+        player.lastname = profileDiv.querySelector(".edit-lname")?.value;
+        player.age = parseInt(profileDiv.querySelector(".edit-age")?.value);
+        player.country = profileDiv.querySelector(".edit-country")?.value;
+        player.ranking = profileDiv.querySelector(".edit-ranking")?.value;
+
+        save();
+        renderPlayerInfo();
+    });
+
+    profileDiv.querySelector(".cancelBtn").addEventListener("click", () => {
+        renderPlayerInfo();
+    });
 }
