@@ -43,9 +43,8 @@ function renderHome() {
         li.className = "player"
         li.innerHTML = `
         <span onclick="goToPlayer('${p.username}')">${p.username}</span>
-        <button onclick="removePlayer('A','${p.username}')">
-        Remove
-        </button>
+        <button onclick="changeTeam('${p.username}', 'A')">Change team</button>
+        <button onclick="removePlayer('A','${p.username}')">Remove</button>
         `
     listA.appendChild(li)
     })
@@ -54,9 +53,8 @@ function renderHome() {
         li.className = "player"
         li.innerHTML = `
         <span onclick="goToPlayer('${p.username}')">${p.username}</span>
-        <button onclick="removePlayer('B','${p.username}')">
-        Remove
-        </button>
+        <button onclick="changeTeam('${p.username}', 'B')">Change team</button>
+        <button onclick="removePlayer('B','${p.username}')">Remove</button>
         `
     listB.appendChild(li)
     })
@@ -66,6 +64,33 @@ function renderHome() {
 function goToPlayer(username) {
     localStorage.setItem("selectedPlayer", username)
     window.location.href = "playerinfo.html"
+}
+
+function changeTeam(username, currentTeam) {
+    if (currentTeam === "A") {
+        if (teamB.length >= 5) {
+            alert("Team B is full!");
+            return;
+        }
+        const index = teamA.findIndex(p => p.username === username);
+        if (index !== -1) {
+            const [player] = teamA.splice(index, 1);
+            teamB.push(player);
+        }
+    } else {
+        if (teamA.length >= 5) {
+            alert("Team A is full!");
+            return;
+        }
+        const index = teamB.findIndex(p => p.username === username);
+        if (index !== -1) {
+            const [player] = teamB.splice(index, 1);
+            teamA.push(player);
+        }
+    }
+
+    save();
+    renderHome();
 }
 
 function removePlayer(team, username) {
