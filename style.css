@@ -45,6 +45,19 @@ h1{
     justify-content: center;
     gap: 3rem;
 }
+#sort{
+    border: 1px solid rgb(36, 29, 100);
+    padding: 5px 2px;
+    border-radius: 5px;
+    color: rgb(102, 102, 102);
+}
+
+.sortBtn{
+    background-color: rgb(51, 43, 120);
+    padding: 5px 20px;
+    border-radius: 5px;
+    color: aliceblue;
+}
 
 .team,
 .rename-wrapper {
@@ -202,10 +215,10 @@ form#playerForm{
 
 @media screen and (min-width:1250px) and (max-width:2200px){
     .team {
-        padding: 60px;
+        padding: 20px;
         border-radius: 10px;
-        width: 500px;
-        height: 400px;
+        width: 800px;
+        height: 450px;
         h2{
             font-size: 35px;
             margin-bottom: 50px;
@@ -221,9 +234,6 @@ form#playerForm{
     }
     .add{
         padding: 10px 80px;
-    }
-    .rename{
-        gap: 20px;
     }
     .input{
         padding: 10px 80px;
@@ -277,4 +287,17 @@ form#playerForm{
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
+}
+
+@media screen and (max-width:900px){ 
+    h1{
+        justify-self: center;
+        font-size: 40px;
+    }
+    nav a{
+        font-size: 15px;
+    }
+    .add{
+        padding: 10px 20px;
+    }
 }
