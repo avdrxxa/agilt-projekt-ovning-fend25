@@ -15,7 +15,6 @@ function save() {
 
 }
 
-
 function renameTeam(team) {
 
     if (team === "A") {
@@ -107,21 +106,28 @@ function usernameExists(username) {
     return teamA.some(p => p.username === username) || teamB.some(p => p.username === username);
 }
 
+function renderTeamSelect() {
+    const teamSelect = document.getElementById("teamSelect");
+    teamSelect.innerHTML = "";
+
+    const spotsA = 5 - teamA.length;
+    const optA = document.createElement("option");
+    optA.value = "A";
+    optA.textContent = `${teamAName} (${spotsA} ${spotsA === 1 ? 'spot' : 'spots'} left)`;
+    if (teamA.length >= 5) optA.disabled = true;
+    teamSelect.appendChild(optA);
+
+    const spotsB = 5 - teamB.length;
+    const optB = document.createElement("option");
+    optB.value = "B";
+    optB.textContent = `${teamBName} (${spotsB} ${spotsB === 1 ? 'spot' : 'spots'} left)`;
+    if (teamB.length >= 5) optB.disabled = true;
+    teamSelect.appendChild(optB);
+}
+
+
 function renderAddPlayer() {
-
-    const teamSelect = document.getElementById("teamSelect")
-
-    teamSelect.innerHTML = `
-
-<option value="A" ${teamA.length >= 5 ? "disabled" : ""}>
-${teamAName}
-</option>
-
-<option value="B" ${teamB.length >= 5 ? "disabled" : ""}>
-${teamBName}
-</option>
-
-`
+    renderTeamSelect();
 
     document.getElementById("playerForm").addEventListener("submit", e => {
 
@@ -141,6 +147,22 @@ ${teamBName}
 
         }
         const team = document.getElementById("teamSelect").value
+
+        if (teamA.length >= 5 && teamB.length >= 5) {
+        alert("Both teams are full!");
+        return;
+    }
+
+    if (team === "A" && teamA.length >= 5) {
+        alert(`${teamAName} is full!`);
+        return;
+    }
+
+    if (team === "B" && teamB.length >= 5) {
+        alert(`${teamBName} is full!`);
+        return;
+    }
+
         if (team === "A") {
             teamA.push(player)
         }
