@@ -1,3 +1,12 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+    });
+});
+
 let teamA = JSON.parse(localStorage.getItem("teamA")) || []
 let teamB = JSON.parse(localStorage.getItem("teamB")) || []
 
