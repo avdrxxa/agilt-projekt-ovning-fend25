@@ -251,9 +251,10 @@ function enableEdit(profileDiv, player) {
     profileDiv.querySelector(".saveBtn").addEventListener("click", () => {
         const newAge = parseInt(profileDiv.querySelector(".edit-age").value)
         if (isNaN(newAge) || newAge < 13 || newAge > 50) {
-        document.getElementById("error").textContent = "Choose age between 13 and 50 only"
-        return
+            document.getElementById("error").textContent = "Choose age between 13 and 50 only"
+            return
         }
+        document.getElementById("error").textContent = ""
         player.firstname = profileDiv.querySelector(".edit-fname")?.value;
         player.lastname = profileDiv.querySelector(".edit-lname")?.value;
         player.age= newAge
