@@ -87,6 +87,7 @@ function renderHome(searchQuery = "") {
         li.className = "player";
         li.innerHTML = `
             <span onclick="goToPlayer('${p.username}')">${p.username}</span>
+            <img src="${p.imageUrl}" alt="">
             <button onclick="changeTeam('${p.username}', 'A')">Change team</button>
             <button onclick="removePlayer('A','${p.username}')">Remove</button>
         `;
@@ -98,6 +99,7 @@ function renderHome(searchQuery = "") {
         li.className = "player";
         li.innerHTML = `
             <span onclick="goToPlayer('${p.username}')">${p.username}</span>
+            <img src="${p.imageUrl}" alt="">
             <button onclick="changeTeam('${p.username}', 'B')">Change team</button>
             <button onclick="removePlayer('B','${p.username}')">Remove</button>
         `;
@@ -199,7 +201,18 @@ function renderTeamSelect() {
 }
 
 
-function renderAddPlayer() {
+async function renderAddPlayer() {
+    const countryDropdown = document.querySelector("#country");
+    try {
+        let response = await axios.get("https://restcountries.com/v3.1/region/europe");
+        for(let i = 0; i < response.data.length; i++){
+            countryDropdown.innerHTML += `
+            <option data-image="${response.data[i].flags.svg}" value="${response.data[i].name.common}">${response.data[i].name.common}</option>
+            `
+        }
+    } catch (err) {
+        console.log(err);
+    }
     renderTeamSelect()
     document.getElementById("playerForm").addEventListener("submit", e => {
         e.preventDefault()
@@ -213,12 +226,16 @@ function renderAddPlayer() {
             document.getElementById("error").textContent = "Choose age between 13 and 50 only";
             return
         }
+        const select = document.getElementById("country");
+        const selectedOption = select.options[select.selectedIndex];
+        const imageUrl = selectedOption.dataset.image;
         const player = {
             username,
             firstname: document.getElementById("firstname").value,
             lastname: document.getElementById("lastname").value,
             age,
             country: document.getElementById("country").value,
+            imageUrl: imageUrl,
             ranking: document.getElementById("ranking").value
         }
         const team = document.getElementById("teamSelect").value
@@ -256,6 +273,7 @@ function renderPlayerInfo() {
 <p><b>Name:</b> ${player?.firstname} ${player?.lastname}</p>
 <p><b>Age:</b> ${player?.age}</p>
 <p><b>Country:</b> ${player?.country}</p>
+<img src="${player?.imageUrl}" alt="">
 <p><b>Ranking:</b> ${player?.ranking}</p>
 <br>
 <button onclick="window.location='index.html'">Back</button>

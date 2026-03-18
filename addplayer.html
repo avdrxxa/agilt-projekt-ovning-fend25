@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Add Player</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="app.js"></script>
 </head>
 <body>
@@ -18,7 +19,7 @@
         <input class="input" id="firstname" placeholder="First name" required>
         <input class="input" id="lastname" placeholder="Last name" required>
         <input class="input" id="age" type="number" placeholder="Age" required>
-        <input class="input" id="country" placeholder="Country" required>
+        <select class="input" id="country"></select>
         <select class="input" id="ranking">
             <option>Iron</option>
             <option>Bronze</option>
@@ -32,7 +33,6 @@
         <button>Add Player</button>
     </form>
     <p id="error"></p>
-    
     <script>
         renderAddPlayer()
     </script>
