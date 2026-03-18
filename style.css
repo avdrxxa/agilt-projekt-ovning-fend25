@@ -106,10 +106,17 @@ nav {
 
     .searchplayer {
         padding: 12px;
-        width: 35ch;
+        width: 30ch;
+    }
+
+    .add {
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+        padding: 12px; 
+        width: 150px;
     }
 }
-
 
 .rename {
     display: flex;
