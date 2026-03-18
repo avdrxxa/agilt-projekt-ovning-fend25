@@ -113,6 +113,8 @@ function renderAddPlayer() {
 
     teamSelect.innerHTML = `
 
+<option value="" disabled selected>Choose team</option>
+
 <option value="A" ${teamA.length >= 5 ? "disabled" : ""}>
 ${teamAName}
 </option>
@@ -141,6 +143,22 @@ ${teamBName}
 
         }
         const team = document.getElementById("teamSelect").value
+
+        if (teamA.length >= 5 && teamB.length >= 5) {
+        alert("Both teams are full!");
+        return;
+    }
+
+    if (team === "A" && teamA.length >= 5) {
+        alert(`${teamAName} is full!`);
+        return;
+    }
+
+    if (team === "B" && teamB.length >= 5) {
+        alert(`${teamBName} is full!`);
+        return;
+    }
+
         if (team === "A") {
             teamA.push(player)
         }
