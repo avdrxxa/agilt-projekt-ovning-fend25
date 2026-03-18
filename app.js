@@ -14,6 +14,7 @@ function save() {
     localStorage.setItem("teamBName", teamBName)
 
 }
+
 function renameTeam(team) {
 
     if (team === "A") {
@@ -28,68 +29,101 @@ function renameTeam(team) {
     renderHome()
 }
 
+function renderHome(searchQuery = "") {
+    const teamANameEl = document.getElementById("teamAName");
+    const teamBNameEl = document.getElementById("teamBName");
+    const listA = document.getElementById("teamAList");
+    const listB = document.getElementById("teamBList");
+    const statistik = document.querySelector('.statistik');
+    const statistik2 = document.querySelector('.statistik2');
 
-function renderHome() {
-    let statistik= document.querySelector('.statistik')
-    let statistik2= document.querySelector('.statistik2')
-    const dataTeamA = JSON.parse(localStorage.getItem('teamA')) || []
-    const dataTeamB = JSON.parse(localStorage.getItem('teamB')) || []
+    if (!listA || !listB) return;
+
+    const dataTeamA = JSON.parse(localStorage.getItem('teamA')) || [];
+    const dataTeamB = JSON.parse(localStorage.getItem('teamB')) || [];
+
     function avgAge(spelare) {
-        if (spelare.length === 0) return 0
-        let total = spelare.reduce((sum, s) => sum + Number(s.age), 0)
-        return (total / spelare.length).toFixed(0) 
+        if (spelare.length === 0) return 0;
+        let total = spelare.reduce((sum, s) => sum + Number(s.age), 0);
+        return (total / spelare.length).toFixed(0);
     }
-    let rankNumber = {
+
+    const rankNumber = {
         "Iron": 1,
         "Bronze": 2,
         "Silver": 3,
         "Gold": 4,
         "Diamond": 5
-    }
-    const numberToRank = ["Iron", "Bronze", "Silver", "Gold", "Diamond"]
+    };
+    const numberToRank = ["Iron", "Bronze", "Silver", "Gold", "Diamond"];
     function getAverageRank(spelare) {
-        if (spelare.length === 0) return "Ingen"
-        const total = spelare.reduce((sum, p) => {
-            return sum + (rankNumber[p.ranking] || 1)
-        }, 0)
-        const avgNum = total / spelare.length
-        const rounded = Math.round(avgNum)
-        return numberToRank[rounded - 1]
+        if (spelare.length === 0) return "Ingen";
+        const total = spelare.reduce((sum, p) => sum + (rankNumber[p.ranking] || 1), 0);
+        const avgNum = total / spelare.length;
+        const rounded = Math.round(avgNum);
+        return numberToRank[rounded - 1];
     }
-    document.getElementById("teamAName").textContent = teamAName
-    document.getElementById("teamBName").textContent = teamBName
-    const listA = document.getElementById("teamAList")
-    const listB = document.getElementById("teamBList")
-    listA.innerHTML = ""
-    listB.innerHTML = ""
-    teamA.forEach(p => {
-        const li = document.createElement("li")
-        li.className = "player"
+
+    if (teamANameEl) teamANameEl.textContent = teamAName;
+    if (teamBNameEl) teamBNameEl.textContent = teamBName;
+
+    listA.innerHTML = "";
+    listB.innerHTML = "";
+
+    const filteredA = teamA.filter(p =>
+        p.username.toLowerCase().includes(searchQuery) ||
+        (p.firstname && p.firstname.toLowerCase().includes(searchQuery)) ||
+        (p.lastname && p.lastname.toLowerCase().includes(searchQuery))
+    );
+
+    const filteredB = teamB.filter(p =>
+        p.username.toLowerCase().includes(searchQuery) ||
+        (p.firstname && p.firstname.toLowerCase().includes(searchQuery)) ||
+        (p.lastname && p.lastname.toLowerCase().includes(searchQuery))
+    );
+
+    filteredA.forEach(p => {
+        const li = document.createElement("li");
+        li.className = "player";
         li.innerHTML = `
-        <span onclick="goToPlayer('${p.username}')">${p.username}</span>
-        <button onclick="changeTeam('${p.username}', 'A')">Change team</button>
-        <button onclick="removePlayer('A','${p.username}')">Remove</button>
-        `
-    listA.appendChild(li)
-    })
-    statistik.innerHTML=`<div>Antal spelare: ${teamA.length}</div> 
-        <div>Avg. ålder: ${avgAge(dataTeamA)}</div>   
-        <div>Avg. rank: ${getAverageRank(dataTeamA)}</div>`
-    teamB.forEach(p => {
-        const li = document.createElement("li")
-        li.className = "player"
+            <span onclick="goToPlayer('${p.username}')">${p.username}</span>
+            <button onclick="changeTeam('${p.username}', 'A')">Change team</button>
+            <button onclick="removePlayer('A','${p.username}')">Remove</button>
+        `;
+        listA.appendChild(li);
+    });
+
+    filteredB.forEach(p => {
+        const li = document.createElement("li");
+        li.className = "player";
         li.innerHTML = `
-        <span onclick="goToPlayer('${p.username}')">${p.username}</span>
-        <button onclick="changeTeam('${p.username}', 'B')">Change team</button>
-        <button onclick="removePlayer('B','${p.username}')">Remove</button>
-        `
-    listB.appendChild(li)
-    })
-    statistik2.innerHTML=`<div>Antal spelare: ${teamB.length}</div> 
-        <div>Avg. ålder: ${avgAge(dataTeamB)}</div>   
-        <div>Avg. rank: ${getAverageRank(dataTeamB)}</div>`
+            <span onclick="goToPlayer('${p.username}')">${p.username}</span>
+            <button onclick="changeTeam('${p.username}', 'B')">Change team</button>
+            <button onclick="removePlayer('B','${p.username}')">Remove</button>
+        `;
+        listB.appendChild(li);
+    });
+
+    if (statistik) {
+        statistik.innerHTML = `<div>Antal spelare: ${teamA.length}</div> 
+            <div>Avg. ålder: ${avgAge(dataTeamA)}</div>   
+            <div>Avg. rank: ${getAverageRank(dataTeamA)}</div>`;
+    }
+
+    if (statistik2) {
+        statistik2.innerHTML = `<div>Antal spelare: ${teamB.length}</div> 
+            <div>Avg. ålder: ${avgAge(dataTeamB)}</div>   
+            <div>Avg. rank: ${getAverageRank(dataTeamB)}</div>`;
+    }
 }
 
+function setupSearch() {
+    const searchInput = document.getElementById("playerSearchInput");
+    if (!searchInput) return;
+    searchInput.addEventListener("input", () => {
+        renderHome(searchInput.value.toLowerCase());
+    });
+}
 
 function goToPlayer(username) {
     localStorage.setItem("selectedPlayer", username)
@@ -118,7 +152,6 @@ function changeTeam(username, currentTeam) {
             teamA.push(player);
         }
     }
-
     save();
     renderHome();
 }
@@ -135,6 +168,15 @@ function removePlayer(team, username) {
 
 function usernameExists(username) {
     return teamA.some(p => p.username === username) || teamB.some(p => p.username === username);
+}
+
+function setupHamburger() {
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    if (!hamburger || !navLinks) return; 
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+    });
 }
 
 function renderTeamSelect() {
@@ -284,3 +326,25 @@ function sortPlayers() {
     }
     renderHome();
 }
+
+function init() {
+    setupHamburger();
+
+    const listA = document.getElementById("teamAList");
+    const listB = document.getElementById("teamBList");
+    if (listA && listB) {
+        renderHome();
+    }
+
+    const searchInput = document.getElementById("playerSearchInput");
+    if (searchInput) {
+        setupSearch();
+    }
+
+    const playerForm = document.getElementById("playerForm");
+    if (playerForm) {
+        renderAddPlayer();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', init);
