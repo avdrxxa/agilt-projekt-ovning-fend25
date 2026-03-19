@@ -4,6 +4,15 @@ let teamB = JSON.parse(localStorage.getItem("teamB")) || []
 let teamAName = localStorage.getItem("teamAName") || "Team A"
 let teamBName = localStorage.getItem("teamBName") || "Team B"
 
+const minTeamSize = 3;
+const maxTeamSize = 7;
+
+function getTeamWarning(team) {
+    if (team.length < minTeamSize) {
+        return `<div style="color:red;">Minst ${minTeamSize} spelare krävs</div>`;
+    }
+    return "";
+}
 
 function save() {
 
@@ -108,12 +117,14 @@ function renderHome(searchQuery = "") {
 
     if (statistik) {
         statistik.innerHTML = `<div>Antal spelare: ${teamA.length}</div> 
+            ${getTeamWarning(teamA)}
             <div>Avg. ålder: ${avgAge(dataTeamA)}</div>   
             <div>Avg. rank: ${getAverageRank(dataTeamA)}</div>`;
     }
 
     if (statistik2) {
-        statistik2.innerHTML = `<div>Antal spelare: ${teamB.length}</div> 
+        statistik2.innerHTML = `<div>Antal spelare: ${teamB.length}</div>
+            ${getTeamWarning(teamB)}
             <div>Avg. ålder: ${avgAge(dataTeamB)}</div>   
             <div>Avg. rank: ${getAverageRank(dataTeamB)}</div>`;
     }
@@ -134,7 +145,7 @@ function goToPlayer(username) {
 
 function changeTeam(username, currentTeam) {
     if (currentTeam === "A") {
-        if (teamB.length >= 5) {
+        if (teamB.length >= maxTeamSize) {
             alert("Team B is full!");
             return;
         }
@@ -144,7 +155,7 @@ function changeTeam(username, currentTeam) {
             teamB.push(player);
         }
     } else {
-        if (teamA.length >= 5) {
+        if (teamA.length >= maxTeamSize) {
             alert("Team A is full!");
             return;
         }
@@ -185,18 +196,18 @@ function renderTeamSelect() {
     const teamSelect = document.getElementById("teamSelect");
     teamSelect.innerHTML = "";
 
-    const spotsA = 5 - teamA.length;
+    const spotsA = maxTeamSize - teamA.length;
     const optA = document.createElement("option");
     optA.value = "A";
     optA.textContent = `${teamAName} (${spotsA} ${spotsA === 1 ? 'spot' : 'spots'} left)`;
-    if (teamA.length >= 5) optA.disabled = true;
+    if (teamA.length >= maxTeamSize) optA.disabled = true;
     teamSelect.appendChild(optA);
 
-    const spotsB = 5 - teamB.length;
+    const spotsB = maxTeamSize - teamB.length;
     const optB = document.createElement("option");
     optB.value = "B";
     optB.textContent = `${teamBName} (${spotsB} ${spotsB === 1 ? 'spot' : 'spots'} left)`;
-    if (teamB.length >= 5) optB.disabled = true;
+    if (teamB.length >= maxTeamSize) optB.disabled = true;
     teamSelect.appendChild(optB);
 }
 
@@ -239,15 +250,15 @@ async function renderAddPlayer() {
             ranking: document.getElementById("ranking").value
         }
         const team = document.getElementById("teamSelect").value
-        if (teamA.length >= 5 && teamB.length >= 5) {
+        if (teamA.length >= maxTeamSize && teamB.length >= maxTeamSize) {
         alert("Both teams are full!");
         return;
     }
-    if (team === "A" && teamA.length >= 5) {
+    if (team === "A" && teamA.length >= maxTeamSize) {
         alert(`${teamAName} is full!`);
         return;
     }
-    if (team === "B" && teamB.length >= 5) {
+    if (team === "B" && teamB.length >= maxTeamSize) {
         alert(`${teamBName} is full!`);
         return;
     }
