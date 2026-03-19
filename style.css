@@ -83,6 +83,10 @@ nav {
     color: rgb(36, 29, 100);
 }
 
+.statistik, .statistik2 {
+margin-top: 50px;
+
+}
 
 @media screen and (min-width: 768px) {
     .nav-links {
@@ -158,7 +162,7 @@ nav {
 }
 
 .team {
-    padding: 20px;
+    padding: 30px 30px 50px;
 }
 
 .rename-wrapper {
@@ -261,7 +265,7 @@ ul#teamAList, ul#teamBList{
     margin-top: 70px;
     background: rgb(36, 29, 100);
     color: aliceblue;
-    padding: 30px;
+    padding: 30px 30px 100px;
     border-radius: 10px;
     width: 250px;
     height: 270px;
@@ -371,6 +375,7 @@ form#playerForm{
     align-self: center;
     justify-self: center;
 }
+
 .statistik, .statistik2{
     display: flex;
     justify-content: space-around;
