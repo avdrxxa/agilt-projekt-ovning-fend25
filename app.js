@@ -9,7 +9,7 @@ const maxTeamSize = 7;
 
 function getTeamWarning(team) {
     if (team.length < minTeamSize) {
-        return `<div style="color:red;">Minst ${minTeamSize} spelare krävs</div>`;
+        return `<div style="color:red;">Min. ${minTeamSize} players needed</div>`;
     }
     return "";
 }
@@ -116,16 +116,16 @@ function renderHome(searchQuery = "") {
     });
 
     if (statistik) {
-        statistik.innerHTML = `<div>Antal spelare: ${teamA.length}</div> 
+        statistik.innerHTML = `<div>Players: ${teamA.length}</div> 
             ${getTeamWarning(teamA)}
-            <div>Avg. ålder: ${avgAge(dataTeamA)}</div>   
+            <div>Avg. age: ${avgAge(dataTeamA)}</div>   
             <div>Avg. rank: ${getAverageRank(dataTeamA)}</div>`;
     }
 
     if (statistik2) {
-        statistik2.innerHTML = `<div>Antal spelare: ${teamB.length}</div>
+        statistik2.innerHTML = `<div>Players: ${teamB.length}</div>
             ${getTeamWarning(teamB)}
-            <div>Avg. ålder: ${avgAge(dataTeamB)}</div>   
+            <div>Avg. age: ${avgAge(dataTeamB)}</div>   
             <div>Avg. rank: ${getAverageRank(dataTeamB)}</div>`;
     }
 }
