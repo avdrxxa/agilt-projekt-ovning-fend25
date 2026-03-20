@@ -2,6 +2,17 @@ body {
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+.nav-links a{
+    padding: 20px;
+    padding-left: 40px;
+}
+nav{
+    display: flex;
+    justify-content: space-around;
+}
+div.nav-top{
+    justify-content: space-around;
+}
 
 h1 {
     text-align: center;
@@ -48,6 +59,7 @@ nav {
     text-align: center;
     width: 26ch;
     box-sizing: border-box;
+    background-color: aliceblue;
 }
 
 .nav-links {
@@ -97,6 +109,13 @@ margin-top: 50px;
         width: auto;
         background: none;
     }
+    .nav-links a{
+        padding: 20px;
+        padding-left: 40px;
+}
+    .container{
+        width: 550px;
+    }
 
     .nav-links a {
         background: none;
@@ -109,8 +128,7 @@ margin-top: 50px;
     }
 
     .searchplayer {
-        padding: 12px;
-        width: 30ch;
+        padding:11px 12px;
     }
 
     .add {
@@ -118,7 +136,7 @@ margin-top: 50px;
         text-align: center;
         margin: 0 auto;
         padding: 12px; 
-        width: 150px;
+        width: 120px;
     }
 }
 
@@ -284,6 +302,12 @@ ul#teamAList, ul#teamBList{
     }   
 }
 
+.addp{
+    background-color: rgb(36, 29, 100);
+    color: aliceblue;
+    border-radius: 10px;
+}
+
 form#playerForm{
     display: flex;
     flex-direction: column;
@@ -292,10 +316,29 @@ form#playerForm{
     .input{
         margin-bottom: 20px;
         padding: 10px 45px;
+        text-align: center;
+        text-justify: center;
     }
     button{
         padding: 20px 50px;
         font-size: 20px;
+    }
+    select#country.input{
+        padding: 10px 33px;
+        color: gray;
+        text-align: center;
+        text-justify: center;
+    }
+    select#ranking.input{
+        padding: 10px 80px;
+        color: gray;
+        text-align: center;
+        text-justify: center;
+    }
+    select#teamSelect.input{
+        color: rgb(42, 42, 42);
+        text-align: center;
+        text-justify: center;
     }
 }
 #error{
@@ -310,7 +353,6 @@ form#playerForm{
         padding: 20px;
         border-radius: 10px;
         width: 800px;
-        height: 450px;
         h2{
             font-size: 35px;
             margin-bottom: 50px;
@@ -323,6 +365,9 @@ form#playerForm{
         ul li{
             margin: 20px 0;
         }
+    }
+    .container{
+        width: 550px;
     }
     .add{
         padding: 10px 80px;
@@ -371,7 +416,7 @@ form#playerForm{
     color: white;
     background-color: rgb(36, 29, 100);
     border-radius: 20px;
-    width: 500px;
+    width: 450px;
     align-self: center;
     justify-self: center;
 }
@@ -391,10 +436,25 @@ form#playerForm{
         font-size: 15px;
     }
     .add{
-        padding: 10px 20px;
+        padding: 11px 10px;
     }
 }
 
 img {
     width: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    .hamburger{
+        padding-left: 10px;
+        margin-right: 50px;
+    }
+    .add{
+        margin-right: 30px;
+        padding: 10px 10px;
+    }
+    .teams .team{
+        width: 300px;
+        height: 500px;
+    }
 }
