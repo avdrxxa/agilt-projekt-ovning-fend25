@@ -334,6 +334,7 @@ async function enableEdit(profileDiv, player) {
     }
 
 
+    
     profileDiv.querySelector(".saveBtn").addEventListener("click", () => {
         const newAge = parseInt(profileDiv.querySelector(".edit-age").value)
         if (isNaN(newAge) || newAge < 13 || newAge > 50) {
@@ -351,6 +352,7 @@ async function enableEdit(profileDiv, player) {
         player.ranking = profileDiv.querySelector(".edit-ranking")?.value;
         player.imageUrl = imageUrl,
         player.country = profileDiv.querySelector("#country")?.value;
+        player.rankValue = returnRankNumber(profileDiv.querySelector(".edit-ranking")?.value);
         save();
         renderPlayerInfo();
     });
