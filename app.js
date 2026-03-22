@@ -299,14 +299,14 @@ const editBtn = document.getElementById("editBtn");
     editBtn.addEventListener("click", () => enableEdit(profile, player));
 }
 
-function enableEdit(profileDiv, player) {
+async function enableEdit(profileDiv, player) {
     profileDiv.innerHTML = `
         <div class="profile">
         <h2>${player?.username}</h2>
         <p><b>First name:</b> <input type="text" value="${player?.firstname}" class="edit-fname"></p>
         <p><b>Last name:</b> <input type="text" value="${player?.lastname}" class="edit-lname"></p>
         <p><b>Age:</b> <input type="number" value="${player?.age}" class="edit-age"></p>
-        <p><b>Country:</b> <input type="text" value="${player?.country}" class="edit-country"></p>
+        <p><b>Country:</b> <select class="input" id="country"></select></p>
         <p><b>Ranking:</b> 
         <select class="edit-ranking" id="ranking" value="${player?.ranking}">
             <option>Iron</option>
@@ -321,18 +321,36 @@ function enableEdit(profileDiv, player) {
         </div>
     `;
 
+    const countryDropdown = document.querySelector("#country");
+    try {
+        let response = await axios.get("https://restcountries.com/v3.1/region/europe");
+        for(let i = 0; i < response.data.length; i++){
+        countryDropdown.innerHTML += `
+        <option data-image="${response.data[i].flags.svg}" value="${response.data[i].name.common}">${response.data[i].name.common}</option>
+        `
+    }
+    } catch (err) {
+        console.log(err);
+    }
+
+
     profileDiv.querySelector(".saveBtn").addEventListener("click", () => {
         const newAge = parseInt(profileDiv.querySelector(".edit-age").value)
         if (isNaN(newAge) || newAge < 13 || newAge > 50) {
             document.getElementById("error").textContent = "Choose age between 13 and 50 only"
             return
         }
+        const select = document.getElementById("country");
+        const selectedOption = select.options[select.selectedIndex];
+        const imageUrl = selectedOption.dataset.image;
         document.getElementById("error").textContent = ""
         player.firstname = profileDiv.querySelector(".edit-fname")?.value;
         player.lastname = profileDiv.querySelector(".edit-lname")?.value;
         player.age= newAge
         player.country = profileDiv.querySelector(".edit-country")?.value;
         player.ranking = profileDiv.querySelector(".edit-ranking")?.value;
+        player.imageUrl = imageUrl,
+        player.country = profileDiv.querySelector("#country")?.value;
         save();
         renderPlayerInfo();
     });
