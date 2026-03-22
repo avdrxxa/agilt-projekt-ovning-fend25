@@ -95,7 +95,7 @@ function renderHome(searchQuery = "") {
         const li = document.createElement("li");
         li.className = "player";
         li.innerHTML = `
-            <span onclick="goToPlayer('${p.username}')">${p.username}</span>
+            <span onclick="goToPlayer('${p.username}')">${p.username} - ${p.ranking}</span>
             <img src="${p.imageUrl}" alt="">
             <button onclick="changeTeam('${p.username}', 'A')">Change team</button>
             <button onclick="removePlayer('A','${p.username}')">Remove</button>
@@ -107,7 +107,7 @@ function renderHome(searchQuery = "") {
         const li = document.createElement("li");
         li.className = "player";
         li.innerHTML = `
-            <span onclick="goToPlayer('${p.username}')">${p.username}</span>
+            <span onclick="goToPlayer('${p.username}')">${p.username} - ${p.ranking}</span>
             <img src="${p.imageUrl}" alt="">
             <button onclick="changeTeam('${p.username}', 'B')">Change team</button>
             <button onclick="removePlayer('B','${p.username}')">Remove</button>
@@ -240,6 +240,7 @@ async function renderAddPlayer() {
         const select = document.getElementById("country");
         const selectedOption = select.options[select.selectedIndex];
         const imageUrl = selectedOption.dataset.image;
+        let rankValue = returnRankNumber(document.getElementById("ranking").value);
         const player = {
             username,
             firstname: document.getElementById("firstname").value,
@@ -247,7 +248,8 @@ async function renderAddPlayer() {
             age,
             country: document.getElementById("country").value,
             imageUrl: imageUrl,
-            ranking: document.getElementById("ranking").value
+            ranking: document.getElementById("ranking").value,
+            rankValue
         }
         const team = document.getElementById("teamSelect").value
         if (teamA.length >= maxTeamSize && teamB.length >= maxTeamSize) {
@@ -285,7 +287,7 @@ function renderPlayerInfo() {
 <p><b>Age:</b> ${player?.age}</p>
 <p><b>Country:</b> ${player?.country}</p>
 <img src="${player?.imageUrl}" alt="">
-<p><b>Ranking:</b> ${player?.ranking}</p>
+<p><b>Ranking:</b> ${player?.ranking} - ${player?.rankValue}</p>
 <br>
 <button onclick="window.location='index.html'">Back</button>
 <button id="editBtn">Edit</button>
@@ -377,3 +379,20 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+function returnRankNumber(rank) {
+    switch (rank) {
+    case "Iron":
+    return (Math.floor(Math.random() * (20 - 1) ) + 1).toString();
+    case "Bronze":
+    return (Math.floor(Math.random() * (40 - 20) ) + 20).toString();
+    case "Silver":
+    return (Math.floor(Math.random() * (60 - 40) ) + 40).toString();
+    case "Gold":
+    return (Math.floor(Math.random() * (80 - 60) ) + 60).toString();
+    case "Diamond":
+    return (Math.floor(Math.random() * (101 - 80) ) + 80).toString();
+    default:
+    return `Error at function "returnRankNumber()"`
+    }
+}
