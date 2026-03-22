@@ -320,7 +320,7 @@ function enableEdit(profileDiv, player) {
         <button class="cancelBtn">Cancel</button>
         </div>
     `;
-
+    
     profileDiv.querySelector(".saveBtn").addEventListener("click", () => {
         const newAge = parseInt(profileDiv.querySelector(".edit-age").value)
         if (isNaN(newAge) || newAge < 13 || newAge > 50) {
@@ -333,6 +333,7 @@ function enableEdit(profileDiv, player) {
         player.age= newAge
         player.country = profileDiv.querySelector(".edit-country")?.value;
         player.ranking = profileDiv.querySelector(".edit-ranking")?.value;
+        player.rankValue = returnRankNumber(profileDiv.querySelector(".edit-ranking")?.value);
         save();
         renderPlayerInfo();
     });
