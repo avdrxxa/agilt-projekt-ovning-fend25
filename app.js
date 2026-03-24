@@ -148,6 +148,14 @@ function goToPlayer(username) {
 }
 
 function changeTeam(username, currentTeam) {
+
+    const player = (currentTeam === "A" ? teamA : teamB).find(p => p.username === username);
+
+    if (player?.isCaptain) {
+        alert("The captain cannot change teams!\nChoose a new captain first.");
+        return;
+    }
+    
     if (currentTeam === "A") {
         if (teamB.length >= maxTeamSize) {
             alert("Team B is full!");
