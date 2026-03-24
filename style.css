@@ -63,11 +63,11 @@ nav {
 }
 
 .nav-links {
-    display: none;        /* gömmer som standard */
+    display: none;
     flex-direction: column;
     gap: 10px;
-    position: absolute;   /* placeras ovanpå resten */
-    top: 60px;            /* justera så den hamnar under hamburgern */
+    position: absolute;
+    top: 60px;
     left: 0;
     width: 100%;
     background-color: rgb(36, 29, 100);
@@ -173,7 +173,7 @@ margin-top: 50px;
 .rename-wrapper {
     flex: 1 1 40%;
     min-width: 250px;
-    max-width: 400px;
+    max-width: 500px;
     box-sizing: border-box;
     border-radius: 10px;
     height: auto;
@@ -264,6 +264,13 @@ ul#teamAList, ul#teamBList{
     flex: 1;
     text-align: left; 
     cursor: pointer;
+}
+
+.captain-icon {
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    user-select: none;
 }
 
 .player button {

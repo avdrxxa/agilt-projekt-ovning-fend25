@@ -95,11 +95,13 @@ function renderHome(searchQuery = "") {
         const li = document.createElement("li");
         li.className = "player";
         li.innerHTML = `
+            <span class="captain-icon" onclick="setCaptain('${p.username}', 'A')">${p.isCaptain ? "👑 Captain" : "◯"}</span>
             <span onclick="goToPlayer('${p.username}')">${p.username} - ${p.ranking}</span>
             <img src="${p.imageUrl}" alt="">
             <button onclick="changeTeam('${p.username}', 'A')">Change team</button>
             <button onclick="removePlayer('A','${p.username}')">Remove</button>
         `;
+
         listA.appendChild(li);
     });
 
@@ -107,11 +109,13 @@ function renderHome(searchQuery = "") {
         const li = document.createElement("li");
         li.className = "player";
         li.innerHTML = `
+            <span class="captain-icon" onclick="setCaptain('${p.username}', 'B')">${p.isCaptain ? "👑 Captain" : "◯"}</span>
             <span onclick="goToPlayer('${p.username}')">${p.username} - ${p.ranking}</span>
             <img src="${p.imageUrl}" alt="">
             <button onclick="changeTeam('${p.username}', 'B')">Change team</button>
             <button onclick="removePlayer('B','${p.username}')">Remove</button>
         `;
+
         listB.appendChild(li);
     });
 
@@ -170,13 +174,20 @@ function changeTeam(username, currentTeam) {
 }
 
 function removePlayer(team, username) {
-    if (team === "A") {
-        teamA = teamA.filter(p => p.username !== username)
-    } else {
-        teamB = teamB.filter(p => p.username !== username)
+    let currentTeam = team === "A" ? teamA : teamB;
+    const wasCaptain = currentTeam.find(p => p.username === username)?.isCaptain;
+
+    currentTeam = currentTeam.filter(p => p.username !== username);
+
+    if (team === "A") teamA = currentTeam;
+    else teamB = currentTeam;
+
+    if (wasCaptain && currentTeam.length > 0) {
+        currentTeam[0].isCaptain = true;
     }
-    save()
-    renderHome()
+
+    save();
+    renderHome();
 }
 
 function usernameExists(username) {
@@ -249,29 +260,34 @@ async function renderAddPlayer() {
             country: document.getElementById("country").value,
             imageUrl: imageUrl,
             ranking: document.getElementById("ranking").value,
-            rankValue
+            rankValue,
+            isCaptain: false
         }
-        const team = document.getElementById("teamSelect").value
+
+        const team = document.getElementById("teamSelect").value;
+        const currentTeam = team === "A" ? teamA : teamB;
+
         if (teamA.length >= maxTeamSize && teamB.length >= maxTeamSize) {
-        alert("Both teams are full!");
-        return;
-    }
-    if (team === "A" && teamA.length >= maxTeamSize) {
-        alert(`${teamAName} is full!`);
-        return;
-    }
-    if (team === "B" && teamB.length >= maxTeamSize) {
-        alert(`${teamBName} is full!`);
-        return;
-    }
-        if (team === "A") {
-            teamA.push(player)
+            alert("Both teams are full!");
+            return;
         }
-        if (team === "B") {
-            teamB.push(player)
+        if (team === "A" && teamA.length >= maxTeamSize) {
+            alert(`${teamAName} is full!`);
+            return;
         }
-        save()
-        window.location.href = "index.html"
+        if (team === "B" && teamB.length >= maxTeamSize) {
+            alert(`${teamBName} is full!`);
+            return;
+        }
+
+        if (!currentTeam.some(p => p.isCaptain)) {
+            player.isCaptain = true;
+        }
+
+        currentTeam.push(player);
+
+        save();
+        window.location.href = "index.html";
     })
 }
 
@@ -376,6 +392,18 @@ function sortPlayers() {
         teamB.sort((a, b) => sortingArr.indexOf(a.ranking) - sortingArr.indexOf(b.ranking));
     }
     renderHome();
+}
+
+function setCaptain(username, team) {
+    let currentTeam = team === "A" ? teamA : teamB;
+
+    currentTeam.forEach(p => {
+        p.isCaptain = (p.username === username);
+    });
+
+    save();
+    renderHome();
+    
 }
 
 function init() {
